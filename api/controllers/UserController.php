@@ -1,13 +1,17 @@
 <?php
-class UserController {
 
-    function index_action($id) {
+class UserController
+{
+
+    function index_action($id)
+    {
         header('Content-Type: application/json');
         $user = User::getUserById($id);
         echo json_encode(array('data' => $user));
     }
 
-    function register_action() {
+    function register_action()
+    {
         if (isset($_POST['name'])) {
             header('Content-Type: application/json');
             $name = $_POST['name'];
@@ -31,7 +35,8 @@ class UserController {
         }
     }
 
-    function login_action() {
+    function login_action()
+    {
         if (isset($_POST['email'])) {
             header('Content-Type: application/json');
             $email = $_POST['email'];
@@ -43,7 +48,7 @@ class UserController {
                 $error = 'WRONG_PASSWORD';
             } else {
                 $user = User::checkUserData($email, $password);
-    
+
                 if ($user->id == false) {
                     $error = 'USER_NOT_EXISTS';
                     echo json_encode(array('error' => $error));
@@ -69,5 +74,4 @@ class UserController {
         unset($_SESSION['userName']);
         echo json_encode(array('success' => 'success'));
     }
-
 }

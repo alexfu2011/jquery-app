@@ -1,7 +1,10 @@
 <?php
-class BookController {
 
-    function index_action($id = null) {
+class BookController
+{
+
+    function index_action($id = null)
+    {
         header('Content-Type: application/json');
         if ($id) {
             $book = Book::getBookById($id);
@@ -12,7 +15,8 @@ class BookController {
         }
     }
 
-    function create_action() {
+    function create_action()
+    {
         if (isset($_POST['title'])) {
             header('Content-Type: application/json');
             $book = array();
@@ -42,7 +46,7 @@ class BookController {
             $book['price'] = $_POST['price'];
             $book['author'] = $_POST['author'];
 
-            if(Book::updateBookById($id, $book))  {
+            if (Book::updateBookById($id, $book)) {
                 echo json_encode(array('data' => $book));
             } else {
                 echo json_encode(array('error' => 'ERROR'));
@@ -53,11 +57,10 @@ class BookController {
     public function delete_action($id)
     {
         header('Content-Type: application/json');
-        if(Book::deleteBookById($id))  {
+        if (Book::deleteBookById($id)) {
             echo json_encode(array('success' => 'success'));
         } else {
             echo json_encode(array('error' => 'ERROR'));
         }
     }
-
 }

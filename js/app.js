@@ -7,17 +7,17 @@ var storage = window.localStorage;
 
 // set api server url
 storage.setItem("apiServer", "/app/api/");
-var apiServer = storage.getItem("apiServer"); 
+var apiServer = storage.getItem("apiServer");
 
 // get api token, if api token not exists, define empty api_token
-var api_token = storage.getItem("api_token"); 
-if (api_token === undefined || api_token === null){
+var api_token = storage.getItem("api_token");
+if (api_token === undefined || api_token === null) {
     storage.setItem("api_token", "");
 }
 
 // get active page, if not exists, define new
 var activePage = storage.getItem("activePage");
-if (activePage === undefined || activePage === null){
+if (activePage === undefined || activePage === null) {
     route('login');
 }
 
@@ -44,17 +44,17 @@ function route(pageView, itemId) {
 // ajax setup for loading indicator when request is made
 $.ajaxSetup({
     cache: true, // retrieve the latest version of an HTML page
-    beforeSend: function(){
+    beforeSend: function () {
         $("#loading").show();
 
         // Reset error message if any
         $("#error-message").html("");
         $("#error-message").hide();
     },
-    complete: function(){
+    complete: function () {
         $("#loading").hide();
     },
-    error: function(){
+    error: function () {
         $("#loading").hide();
     },
     headers: { "Authorization": "Bearer " + api_token },

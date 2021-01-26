@@ -31,9 +31,9 @@
             </div>
 
             <div class="form-group">
-				<!-- define PUT method in case method blocked by firewall or internet provider
+                <!-- define PUT method in case method blocked by firewall or internet provider
                     or not supported by the browser -->
-				<input type="hidden" name="_method" value="put">
+                <input type="hidden" name="_method" value="put">
                 <button class="form-control btn btn-success" id="btn-submit">Submit</button>
             </div>
         </form>
@@ -90,9 +90,9 @@
                 // storage.getItem("itemId") is id for training that we keep earlier
                 url: apiServer + "books/update/" + storage.getItem("itemId"),
                 //type: "put", // using PUT method to update data
-				// if above code can't update data
-				// use type POST and define PUT method on hidden input form to update data
-                type: "PUT", 
+                // if above code can't update data
+                // use type POST and define PUT method on hidden input form to update data
+                type: "PUT",
                 dataType: "json",
                 data: $("form#form-submit").serialize(), // populate data from form
                 success: function (result) { // return code 200 (success)

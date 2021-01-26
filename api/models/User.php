@@ -2,8 +2,7 @@
 
 class User
 {
-
-    public static function register($name, $email, $password)
+    function register($name, $email, $password)
     {
         $db = DB::getDbConnection();
         $data = array($name, $email, $password);
@@ -12,16 +11,16 @@ class User
         return $result->execute($data);
     }
 
-    public static function checkName($name)
+    function checkName($name)
     {
         $name = urldecode(htmlspecialchars(trim($name)));
-        if (strlen($name) >= 3) {
+        if (strlen($name) >= 5) {
             return true;
         }
         return false;
     }
 
-    public static function checkEmail($email)
+    function checkEmail($email)
     {
         $email = urldecode(htmlspecialchars(trim($email)));
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -30,7 +29,7 @@ class User
         return false;
     }
 
-    public static function checkPassword($password)
+    function checkPassword($password)
     {
         $password = urldecode(htmlspecialchars(trim($password)));
         if (strlen($password) >= 6) {
@@ -39,7 +38,7 @@ class User
         return false;
     }
 
-    public static function checkEmailExists($email)
+    function checkEmailExists($email)
     {
         $db = DB::getDbConnection();
 
@@ -53,7 +52,7 @@ class User
         return false;
     }
 
-    public static function checkUserData($email, $password)
+    function checkUserData($email, $password)
     {
         $db = DB::getDbConnection();
 
@@ -69,22 +68,14 @@ class User
         return false;
     }
 
-    public static function auth($userId, $userName, $userEmail)
+    function auth($userId, $userName, $userEmail)
     {
         $_SESSION['userId'] = $userId;
         $_SESSION['userName'] = $userName;
         $_SESSION['userEmail'] = $userEmail;
     }
 
-    public static function checkLogged()
-    {
-        if (isset($_SESSION['userId'])) {
-            return $_SESSION['userId'];
-        }
-        header("Location: /login");
-    }
-
-    public static function getUserById($id)
+    function getUserById($id)
     {
         $db = DB::getDbConnection();
 
