@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- //===== script =====// -->
+    <script src="js/jquery.min.js"></script>  <!-- jquery library  -->
+    <script src="js/app.js"></script>  <!-- application script -->
+    <script>
+        $(function () {
+            // send data to server and get response
+            $.ajax({
+                url: apiServer + "logout",
+                type: "post",
+                dataType: "json",
+                success: function (result) { 
+                    // return code 200 (success)
+                    // remove app status
+                    window.localStorage.removeItem("apiServer");
+                    window.localStorage.removeItem("api_token");
+                    window.localStorage.removeItem("activePage");
+
+                    // remove user detail
+                    window.localStorage.removeItem("user_id");
+                    window.localStorage.removeItem("user_name");
+                    window.localStorage.removeItem("user_email");
+
+                    // clear all
+                    window.localStorage.clear();
+
+                    // redirect to login page
+                    window.location.href = "index.html";
+                },
+                error: function (xhr, ajaxOptions, thrownError) { 
+                    // return code 422 (error)
+                    alert("An error has occurred. Please try again.");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

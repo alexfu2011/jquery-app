@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header header">Dashboard</div> <!-- page title -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>Welcome <strong><span id="user_name"></span>!</strong></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>Add a new book or update book now.</p>
+                        <a href="#" onclick="route('books/create');" class="btn btn-success">Add New Book</a>
+                        <a href="#" onclick="route('books');" class="btn btn-warning"> View Books</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- script goes here -->
+<script>
+    $(function () {
+        // set app name from variable
+        $(".app_name").html(app_name);
+
+        // set user name at welcome message
+        $("#user_name").text(storage.getItem("user_name"));
+    });
+</script>

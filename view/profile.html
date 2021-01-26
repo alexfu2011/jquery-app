@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-header header">Profile</div> <!-- page title -->
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="form-group">
+                    <label>Name:</label>
+                    <div id="name"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email:</label>
+                    <div id="email"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- script goes here -->
+<script>
+    $(function () {
+        // on page load, send data to server and get response
+        $.ajax({
+            cache: true,
+            url: apiServer + "users/" + storage.getItem("user_id"),
+            type: "get",
+            dataType: "json",
+            success: function (result) { // return code 200 (success)
+                // set values from json object
+                $("#name").html(result.data.name);
+                $("#email").html(result.data.email);
+            },
+            error: function (result, ajaxOptions, thrownError) { // return code 422 (error)
+                alert("An error has occurred. Please try again.");
+            }
+        });
+    });
+</script>

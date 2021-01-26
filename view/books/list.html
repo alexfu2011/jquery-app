@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-sm-12">
+        <p class="header"><strong>Books</strong></p>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 pb-10">
+        <a href="#" onclick="route('books/create');" class="btn btn-success">
+            Add New Book
+        </a>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-sm table-bordered" id="table-list" style="width:100%;">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Author</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody class="table-striped"></tbody>
+    </table>
+</div>
+
+<!-- script goes here -->
+<script>
+    $(function () {
+        // get data from server and populate in jQuery DataTable plugin
+        $('#table-list').DataTable({
+            "ajax": { url: apiServer + "books", cache: true, "type": "GET" },
+            "columns": [
+                { "data": "id", "className": "center" },
+                { "data": "title" },
+                { "data": "description" },
+                { "data": "price" },
+                { "data": "author" },
+                {
+                    "render": function (data, type, row, meta) {
+                        var view = "<a href='#' onclick='route(\"books/view\", " + row.id +
+                            ")'><i class='fa fa-eye'></i></a> ";
+                        var edit = "<a href='#' onclick='route(\"books/update\", " + row.id +
+                            ")'><i class='fa fa-edit'></i></a> ";
+                        var remove = "<a href='#' onclick='deleteItem(" + row.id +
+                            ");'><i class='fa fa-trash'></i></a> ";
+                        return view + edit + remove;
+                    }, 
+                    "className": "center"
+                }
+            ],
+            "scrollX": true
+        });
+    });
+
+    // function to delete item
+    function deleteItem(itemId) {
+        if (!confirm('Are you sure you want to delete this item?')) {
+            e.preventDefault();
+        }
+        else {
+            // send data to server and get response
+            $.ajax({
+                url: apiServer + "books/delete/" + itemId,
+                type: "DELETE",
+                dataType: "json",
+                data: { _method: "delete" },
+                success: function (result) { // return code 200 (success)
+                    // redirect user to list
+                    route('books/list');
+                },
+                error: function (result, ajaxOptions, thrownError) { // return code 422 (error)
+                    alert("An error has occurred. Please try again.");
+                }
+            });
+        }
+    }
+</script>

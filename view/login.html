@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-sm-12 mt-5">
+        <h1 align="center"><img src="images/icon-512.png" style="width: 150px;" /><br /><span class="app_name">My Application</span></h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 mt-5">
+        <form id="form-login">
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="text" class="form-control" name="email" id="email">
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" class="form-control" name="password" id="password">
+            </div>
+            <div class="form-group">
+                <button class="form-control btn btn-success" id="btn-login">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12" align="center">
+        Or...
+        <br>
+        <a href="#" id="btn-register" onclick="route('register');"><strong>Register An Account</strong></a>
+    </div>
+</div>
+
+<!-- script goes here -->
+<script>
+    $(function () {
+        // set app name from variable
+        $(".app_name").html(app_name);
+
+        // button login
+        $("#btn-login").on('click', function (e) {
+            e.preventDefault(); // Disabled default form behavior
+
+            // send data to server and get response
+            $.ajax({
+                url: apiServer + "login",
+                type: "post",
+                dataType: "json",
+                data: $("form#form-login").serialize(),
+                success: function (result) { // return code 200 (success)
+                    //console.log(result); // check return message from server
+                    //console.log(result.data.api_token); // read return message
+
+                    // save result data to local storage
+                    if (result.success) {
+                        storage.setItem("api_token", result.data.api_token); // use as authentication code when request data from server
+                        storage.setItem("user_id", result.data.id);
+                        storage.setItem("user_name", result.data.name);
+                        storage.setItem("user_email", result.data.email);
+
+                        // redirect user to dashboard
+                        route('dashboard');
+                    } else {
+                        console.log(result);
+                    }
+                },
+                error: function (result, ajaxOptions, thrownError) { // return code 422 (error)
+                    //console.log("Error: " + result.responseText); // check return message from server
+                    alert("Incorrect login information. Please check your credentials and try again.");
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
